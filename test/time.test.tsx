@@ -12,14 +12,14 @@ describe('timey-wimey', () => {
     const pivot = new Date('2011-11-13T05:00:00.000Z');
     const result = getSegmentOfDays(pivot);
 
-    expect(result.start).toEqual(new Date('2011-10-30T05:00:00.000Z'));
-    expect(result.end).toEqual(new Date('2011-12-04T05:59:59.999Z'));
+    expect(result.start).toEqual(new Date('2011-10-30T00:00:00.000Z'));
+    expect(result.end).toEqual(new Date('2011-12-03T23:59:59.999Z'));
     expect(result.dayCount).toEqual(35);
 
     expect(result.days.length).toEqual(35);
     expect(result.weeks.length).toEqual(5);
 
-    expect(result.weeks[0][0]).toEqual(new Date('2011-10-30T05:00:00.000Z'));
-    expect(result.weeks[4][6]).toEqual(new Date('2011-12-03T06:00:00.000Z'));
+    expect(result.weeks[0][0]).toEqual(new Date('2011-10-30T00:00:00.000Z'));
+    expect(result.weeks[4][6]).toEqual(new Date('2011-12-03T00:00:00.000Z'));
   });
 });
