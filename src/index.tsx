@@ -5,12 +5,14 @@ import {
   endOfWeek,
   differenceInDays,
   addDays,
+  isSameMonth,
+  format,
 } from 'date-fns';
 import _ from 'lodash';
 
 export const useDatetimePicker = () => {};
 
-export function getSegmentOfDays(pivot: Date): DisplaySegment {
+export function getDisplaySegment(pivot: Date): DisplaySegment {
   const firstMonthDay = startOfMonth(pivot);
   const lastMonthDay = endOfMonth(pivot);
 
@@ -24,14 +26,27 @@ export function getSegmentOfDays(pivot: Date): DisplaySegment {
     .fill(0)
     .map((_, i) => addDays(firstSegmentDay, i));
 
-  const weeks = _.chunk(days, 7);
+  const Days: Day[] = days.map(d => ({
+    date: d,
+    name: format(d, 'PPPPpppp'),
+    inMonth: isSameMonth(pivot, d),
+  }));
+
+  const weeks = _.chunk(Days, 7);
+
+  const Weeks: Week[] = weeks.map(week => ({
+    days: week,
+    start: week[0],
+    end: week[6],
+    fullWeek: week.every(day => isSameMonth(pivot, day.date)),
+  }));
 
   return {
     start: firstSegmentDay,
     end: lastSegmentDay,
     dayCount,
-    days,
-    weeks,
+    days: Days,
+    weeks: Weeks,
   };
 }
 
@@ -41,6 +56,18 @@ export interface DisplaySegment {
   start: Date;
   end: Date;
   dayCount: number;
-  days: Date[];
-  weeks: Date[][];
+  days: Day[];
+  weeks: Week[];
+}
+
+export interface Day {
+  date: Date;
+  inMonth: boolean;
+}
+
+export interface Week {
+  days: Day[];
+  start: Day;
+  end: Day;
+  fullWeek: boolean;
 }
