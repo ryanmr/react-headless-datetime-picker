@@ -28,7 +28,7 @@ export function getDisplaySegment(pivot: Date): DisplaySegment {
 
   const Days: Day[] = days.map(d => ({
     date: d,
-    name: format(d, 'PPPPpppp'),
+    __name: format(d, 'PPPPpppp'),
     inMonth: isSameMonth(pivot, d),
   }));
 
