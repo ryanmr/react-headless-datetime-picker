@@ -8,8 +8,8 @@ describe('timey-wimey', () => {
     expect(result).toBeTruthy();
   });
 
-  it('gets a screens-ful of days: 2011-11-13', () => {
-    const pivot = new Date(2011, 10, 13);
+  it('gets a screens-ful of days: 2011-11-13T05:00:00.000Z', () => {
+    const pivot = new Date('2011-11-13T05:00:00.000Z');
     const result = getSegmentOfDays(pivot);
 
     expect(result.start).toEqual(new Date('2011-10-30T05:00:00.000Z'));
